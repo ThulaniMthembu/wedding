@@ -144,7 +144,7 @@ export default function RsvpPage() {
           <div className="absolute inset-0 bg-black/20" />
           <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
             <motion.h1 
-              className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white font-light text-center mb-8"
+              className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white font-light text-center mb-8 "
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}

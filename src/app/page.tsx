@@ -8,7 +8,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 
 const images = ['/couple-image.jpg', '/couple-image2.jpg', '/couple-image3.jpg'];
 
-const ourStory = "Azwi had admired Sbo from a distance for some time, captivated by her charisma and warmth. He often found himself drawn into Sbo’s world, noticing little details like her laughter, her kindness toward others, and the way she seemed to light up every room she entered. One day, fate seemed to take pity on Azwi's quiet admiration, bringing the two together in a chance encounter. Conversation flowed effortlessly, and in that moment, both felt the unmistakable pull of connection. What began as a quiet admiration blossomed into a love story, marking the start of their beautiful journey together.";
+const ourStory = "Azwi had admired Sbo from a distance for some time, captivated by her charisma and warmth. He often found himself drawn into Sbo's world, noticing little details like her laughter, her kindness toward others, and the way she seemed to light up every room she entered. One day, fate seemed to take pity on Azwi's quiet admiration, bringing the two together in a chance encounter. Conversation flowed effortlessly, and in that moment, both felt the unmistakable pull of connection. What began as a quiet admiration blossomed into a love story, marking the start of their beautiful journey together.";
 
 export default function HomePage() {
   const [timeLeft, setTimeLeft] = useState({
@@ -41,7 +41,6 @@ export default function HomePage() {
     return () => clearInterval(timer);
   }, []);
 
-
   return (
     <div className='min-h-screen bg-[#FDF8F5] text-[#8B4513]'>
       {/* Hero Section */}
@@ -60,15 +59,15 @@ export default function HomePage() {
           style={{ opacity }}
         >
           <motion.h1
-            className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light mb-4'
+            className='text-[#2c2d31] text-5xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-light mb-4'
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            Azwimpheleli & Sebongile
+            Azwimpheleli <br /> &infin; Sebongile
           </motion.h1>
           <motion.p
-            className='text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light mb-8'
+            className='text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-light mb-8'
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -76,12 +75,12 @@ export default function HomePage() {
             Forever Begins Here
           </motion.p>
           <motion.p
-            className='text-lg sm:text-xl md:text-2xl mb-8'
+            className='text-2xl sm:text-2xl md:text-3xl lg:text-4xl mb-8'
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            March 1, 2025 • 10:00 AM
+            March 1, 2025 • 10:00
           </motion.p>
           <motion.div
             className='flex justify-center space-x-2 sm:space-x-4 mb-8'
@@ -91,10 +90,10 @@ export default function HomePage() {
           >
             {Object.entries(timeLeft).map(([key, value]) => (
               <div key={key} className='text-center'>
-                <span className='text-2xl sm:text-3xl md:text-4xl font-bold'>
+                <span className='text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'>
                   {value}
                 </span>
-                <p className='text-xs sm:text-sm'>
+                <p className='text-xs sm:text-sm md:text-base'>
                   {key.charAt(0).toUpperCase() + key.slice(1)}
                 </p>
               </div>
@@ -107,9 +106,10 @@ export default function HomePage() {
           >
             <Link
               href='/rsvp'
-              className='inline-block px-6 sm:px-8 md:px-12 py-2 sm:py-3 text-base sm:text-lg font-light bg-[#D4B996] text-[#8B4513] hover:bg-[#C1A982] hover:text-white transition-colors'
+              className='inline-block px-8 sm:px-8 md:px-12 py-3 sm:py-3 text-lg sm:text-lg md:text-xl font-light bg-[#D4B996] text-[#8B4513] hover:bg-[#C1A982] hover:text-black transition-all duration-300 hover:scale-105 hover:shadow-lg relative overflow-hidden group'
             >
-              RSVP
+              <span className="relative z-10">RSVP</span>
+              <span className="absolute inset-0 bg-[#8B4513] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
             </Link>
           </motion.div>
         </motion.div>
@@ -117,21 +117,21 @@ export default function HomePage() {
 
       {/* Welcome Section with Images */}
       <motion.section
-        className='py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-white'
+        className='py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white'
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
       >
         <div className='max-w-6xl mx-auto'>
-          <h2 className='text-3xl sm:text-4xl md:text-5xl font-light text-center mb-8 sm:mb-12 text-[#8B4513]'>
+          <h2 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-center mb-6 sm:mb-8 lg:mb-12 text-[#8B4513]'>
             Welcome to Our Celebration
           </h2>
-          <p className='text-lg sm:text-xl text-center mb-12 sm:mb-16 text-[#6B4423]'>
+          <p className='text-base sm:text-lg md:text-xl text-center mb-8 sm:mb-12 lg:mb-16 text-[#6B4423]'>
             Join us as we begin our journey together. Elegant attire
-            requested. <br /> Black, White, Emerald Green and a touch of bling. 
+            requested. <br className="hidden sm:inline" /> Black, White, Emerald Green and a touch of bling. 
           </p>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8'>
             {images.map((src, index) => (
               <motion.div
                 key={index}
@@ -145,7 +145,7 @@ export default function HomePage() {
                   alt={`Couple photo ${index + 1}`}
                   fill
                   className='object-cover rounded-lg shadow-lg'
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
               </motion.div>
             ))}
@@ -155,7 +155,7 @@ export default function HomePage() {
 
       {/* Story and Logo Section */}
       <motion.section
-        className='py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-white'
+        className='py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white'
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -174,11 +174,11 @@ export default function HomePage() {
               </div>
             </div>
             <div className='order-1 lg:order-2'>
-              <h2 className='text-3xl sm:text-4xl text-center lg:text-left mb-8 sm:mb-12 text-[#8B4513]'>
-							From Admiration to Love
+              <h2 className='text-2xl sm:text-3xl md:text-4xl text-center lg:text-left mb-6 sm:mb-8 text-[#8B4513]'>
+                From Admiration to Love
               </h2>
               <motion.p
-                className='text-lg text-[#6B4423] leading-relaxed text-center lg:text-left'
+                className='text-base sm:text-lg md:text-xl text-[#6B4423] leading-relaxed text-center lg:text-left'
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
@@ -193,14 +193,14 @@ export default function HomePage() {
 
       {/* Wedding Schedule Section */}
       <motion.section
-        className='py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-[#FDF8F5]'
+        className='py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#FDF8F5]'
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
       >
         <div className='max-w-4xl mx-auto'>
-          <h2 className='text-3xl sm:text-4xl text-center mb-8 sm:mb-12 font-light'>
+          <h2 className='text-2xl sm:text-3xl md:text-4xl text-center mb-6 sm:mb-8 lg:mb-12 font-light'>
             Wedding Schedule
           </h2>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8'>
@@ -228,21 +228,21 @@ export default function HomePage() {
                 whileHover={{ scale: 1.03 }}
               >
                 <div className='bg-[#D2B48C] p-4'>
-                  <h3 className='text-xl sm:text-2xl font-light text-white flex items-center'>
-                    <Calendar className='mr-2 h-5 w-5 sm:h-6 sm:w-6' />{' '}
+                  <h3 className='text-lg sm:text-xl md:text-2xl font-light text-white flex items-center'>
+                    <Calendar className='mr-2 h-5 w-5' />{' '}
                     {event.title}
                   </h3>
                 </div>
                 <div className='bg-[#2C2D31] p-4 sm:p-6'>
-                  <p className='text-xl sm:text-2xl text-[#E6BE8A] font-light mb-2'>
+                  <p className='text-lg sm:text-xl md:text-2xl text-[#E6BE8A] font-light mb-2'>
                     {event.date}
                   </p>
-                  <p className='text-lg sm:text-xl text-[#E6BE8A] mb-4 sm:mb-6'>
+                  <p className='text-base sm:text-lg md:text-xl text-[#E6BE8A] mb-4 sm:mb-6'>
                     {event.time}
                   </p>
                   <div className='flex items-start'>
                     <MapPin className='mr-2 h-5 w-5 text-[#E6BE8A] mt-1' />
-                    <p className='text-[#E6BE8A] whitespace-pre-line'>
+                    <p className='text-sm sm:text-base md:text-lg text-[#E6BE8A] whitespace-pre-line'>
                       {event.location}
                     </p>
                   </div>

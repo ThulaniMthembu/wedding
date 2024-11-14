@@ -8,6 +8,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
+  // Handle scroll events
   useEffect(() => {
     const handleScroll = () => {
       const isScrolled = window.scrollY > 0
@@ -20,6 +21,19 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [scrolled])
 
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768 && isMenuOpen) {
+        setIsMenuOpen(false)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [isMenuOpen])
+
+  // Handle body scroll lock
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden'
@@ -30,11 +44,11 @@ export default function Header() {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
-  // Desktop NavLink without animations
+  // Desktop NavLink component
   const DesktopNavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
     <Link 
       href={href} 
-      className={`text-[20px] relative group ${
+      className={`text-base sm:text-lg lg:text-xl relative group transition-colors duration-300 ${
         scrolled ? 'text-[#8B4513]' : 'text-black'
       }`}
     >
@@ -45,11 +59,11 @@ export default function Header() {
     </Link>
   )
 
-  // Mobile NavLink with animations
+  // Mobile NavLink component
   const MobileNavLink = ({ href, children, delay }: { href: string; children: React.ReactNode; delay: number }) => (
     <Link 
       href={href} 
-      className="text-[20px] relative group text-3xl"
+      className="text-2xl sm:text-3xl relative group transition-colors duration-300"
       onClick={() => setIsMenuOpen(false)}
       style={{ 
         animationDelay: `${delay}ms`,
@@ -77,19 +91,24 @@ export default function Header() {
                 alt="Official Logo"
                 width={200}
                 height={64}
-                className={`transition-all duration-300 ${scrolled ? 'h-12 w-auto' : 'h-20 w-auto'}`}
+                priority
+                className={`transition-all duration-300 ${
+                  scrolled 
+                    ? 'h-12 w-auto' 
+                    : 'h-16 sm:h-20 w-auto'
+                }`}
               />
             </Link>
           </div>
           
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-10">
+          <nav className="hidden md:flex items-center space-x-6 lg:space-x-10">
             <DesktopNavLink href="/">Wedding</DesktopNavLink>
             <DesktopNavLink href="/location">Location</DesktopNavLink>
             <DesktopNavLink href="/gifts">Gifts</DesktopNavLink>
             <Link
               href="/rsvp"
-              className={`px-6 py-2 text-[20px] transition-all duration-300 rounded-md hover:scale-105 ${
+              className={`px-4 sm:px-6 py-2 text-base sm:text-lg lg:text-xl transition-all duration-300 rounded-md hover:scale-105 ${
                 scrolled 
                   ? 'bg-[#8B4513] text-white hover:bg-[#6B3100]' 
                   : 'bg-black text-white hover:bg-gray-800'
@@ -102,25 +121,23 @@ export default function Header() {
           {/* Hamburger Button */}
           <button 
             onClick={toggleMenu}
-            className={`fixed md:hidden w-10 h-10 flex flex-col justify-center items-center focus:outline-none 
-                       transition-all duration-300 z-50 right-4 top-6 ${
-                         isMenuOpen ? 'text-[#8B4513]' : ''
-                       }`}
+            className={`md:hidden w-12 sm:w-14 h-12 sm:h-14 flex flex-col justify-center items-center focus:outline-none 
+                       transition-all duration-300 z-50 ${isMenuOpen ? 'text-[#8B4513]' : ''}`}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >
             <span 
-              className={`block h-0.5 w-6 rounded-sm bg-current transition-all duration-300 ease-out ${
-                isMenuOpen ? 'rotate-45 translate-y-1' : '-translate-y-1'
+              className={`block h-0.5 w-8 sm:w-10 rounded-sm bg-current transition-all duration-300 ease-out ${
+                isMenuOpen ? '-rotate-45 translate-y-1' : '-translate-y-1'
               }`}
             />
             <span 
-              className={`block h-0.5 w-6 rounded-sm bg-current transition-all duration-300 ease-out ${
+              className={`block h-0.5 w-8 sm:w-10 rounded-sm bg-current transition-all duration-300 ease-out ${
                 isMenuOpen ? 'opacity-0' : 'opacity-100'
               }`}
             />
             <span 
-              className={`block h-0.5 w-6 rounded-sm bg-current transition-all duration-300 ease-out ${
-                isMenuOpen ? '-rotate-45 -translate-y-1' : 'translate-y-1'
+              className={`block h-0.5 w-8 sm:w-10 rounded-sm bg-current transition-all duration-300 ease-out ${
+                isMenuOpen ? 'rotate-45 -translate-y-1' : 'translate-y-1'
               }`}
             />
           </button>
@@ -140,30 +157,31 @@ export default function Header() {
           zIndex: 40 
         }}
       >
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-6 sm:py-8">
           <Link 
             href="/" 
-            className="flex items-center space-x-4 text-black mb-12" 
+            className="flex items-center space-x-4 text-black mb-8 sm:mb-12" 
             onClick={() => setIsMenuOpen(false)}
           >
             <Image
               src="/official-logo.png"
               alt="Official Logo"
-              width={150}
-              height={48}
+              width={200}
+              height={64}
               className="h-12 w-auto"
+              priority
             />
           </Link>
         </div>
         
         {/* Mobile Navigation */}
-        <nav className="flex-grow flex flex-col justify-center items-center space-y-12 p-4">
+        <nav className="flex-grow flex flex-col justify-center items-center space-y-8 sm:space-y-12 p-4">
           <MobileNavLink href="/" delay={100}>Wedding</MobileNavLink>
           <MobileNavLink href="/location" delay={200}>Location</MobileNavLink>
           <MobileNavLink href="/gifts" delay={300}>Gifts</MobileNavLink>
           <Link
             href="/rsvp"
-            className="px-8 py-3 text-[20px] bg-[#8B4513] text-white hover:bg-[#6B3100] 
+            className="px-6 sm:px-8 py-2 sm:py-3 text-xl sm:text-2xl bg-[#8B4513] text-white hover:bg-[#6B3100] 
                        transition-all duration-300 rounded-md hover:scale-105 animate-fadeSlideIn"
             onClick={() => setIsMenuOpen(false)}
             style={{ 
