@@ -30,12 +30,26 @@ export default function Header() {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
-  const NavLink = ({ href, children, delay }: { href: string; children: React.ReactNode; delay: number }) => (
+  // Desktop NavLink without animations
+  const DesktopNavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
     <Link 
       href={href} 
       className={`text-[20px] relative group ${
         scrolled ? 'text-[#8B4513]' : 'text-black'
-      } ${isMenuOpen ? 'animate-fadeSlideIn text-3xl' : ''}`}
+      }`}
+    >
+      {children}
+      <span className={`absolute left-0 bottom-0 w-full h-0.5 transform scale-x-0 transition-transform duration-300 origin-right group-hover:scale-x-100 group-hover:origin-left ${
+        scrolled ? 'bg-[#D4B996]' : 'bg-black'
+      }`}></span>
+    </Link>
+  )
+
+  // Mobile NavLink with animations
+  const MobileNavLink = ({ href, children, delay }: { href: string; children: React.ReactNode; delay: number }) => (
+    <Link 
+      href={href} 
+      className="text-[20px] relative group text-3xl"
       onClick={() => setIsMenuOpen(false)}
       style={{ 
         animationDelay: `${delay}ms`,
@@ -44,9 +58,7 @@ export default function Header() {
       }}
     >
       {children}
-      <span className={`absolute left-0 bottom-0 w-full h-0.5 transform scale-x-0 transition-transform duration-300 origin-right group-hover:scale-x-100 group-hover:origin-left ${
-        scrolled ? 'bg-[#D4B996]' : 'bg-black'
-      }`}></span>
+      <span className="absolute left-0 bottom-0 w-full h-0.5 transform scale-x-0 transition-transform duration-300 origin-right group-hover:scale-x-100 group-hover:origin-left bg-[#D4B996]"></span>
     </Link>
   )
 
@@ -69,10 +81,12 @@ export default function Header() {
               />
             </Link>
           </div>
+          
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-10">
-            <NavLink href="/" delay={0}>Wedding</NavLink>
-            <NavLink href="/location" delay={0}>Location</NavLink>
-            <NavLink href="/gifts" delay={0}>Gifts</NavLink>
+            <DesktopNavLink href="/">Wedding</DesktopNavLink>
+            <DesktopNavLink href="/location">Location</DesktopNavLink>
+            <DesktopNavLink href="/gifts">Gifts</DesktopNavLink>
             <Link
               href="/rsvp"
               className={`px-6 py-2 text-[20px] transition-all duration-300 rounded-md hover:scale-105 ${
@@ -85,7 +99,7 @@ export default function Header() {
             </Link>
           </nav>
           
-          {/* Fixed Position Hamburger Button */}
+          {/* Hamburger Button */}
           <button 
             onClick={toggleMenu}
             className={`fixed md:hidden w-10 h-10 flex flex-col justify-center items-center focus:outline-none 
@@ -142,10 +156,11 @@ export default function Header() {
           </Link>
         </div>
         
+        {/* Mobile Navigation */}
         <nav className="flex-grow flex flex-col justify-center items-center space-y-12 p-4">
-          <NavLink href="/" delay={100}>Wedding</NavLink>
-          <NavLink href="/location" delay={200}>Location</NavLink>
-          <NavLink href="/gifts" delay={300}>Gifts</NavLink>
+          <MobileNavLink href="/" delay={100}>Wedding</MobileNavLink>
+          <MobileNavLink href="/location" delay={200}>Location</MobileNavLink>
+          <MobileNavLink href="/gifts" delay={300}>Gifts</MobileNavLink>
           <Link
             href="/rsvp"
             className="px-8 py-3 text-[20px] bg-[#8B4513] text-white hover:bg-[#6B3100] 
