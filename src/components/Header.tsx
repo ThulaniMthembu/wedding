@@ -85,24 +85,27 @@ export default function Header() {
             </Link>
           </nav>
           
-          {/* Enhanced Hamburger Button */}
+          {/* Fixed Position Hamburger Button */}
           <button 
             onClick={toggleMenu}
-            className="relative md:hidden w-10 h-10 flex flex-col justify-center items-center focus:outline-none"
+            className={`fixed md:hidden w-10 h-10 flex flex-col justify-center items-center focus:outline-none 
+                       transition-all duration-300 z-50 right-4 top-6 ${
+                         isMenuOpen ? 'text-[#8B4513]' : ''
+                       }`}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >
             <span 
-              className={`block h-0.5 w-6 rounded-sm bg-current transition-all duration-300 ease-in-out ${
+              className={`block h-0.5 w-6 rounded-sm bg-current transition-all duration-300 ease-out ${
                 isMenuOpen ? 'rotate-45 translate-y-1' : '-translate-y-1'
               }`}
             />
             <span 
-              className={`block h-0.5 w-6 rounded-sm bg-current transition-all duration-300 ease-in-out ${
+              className={`block h-0.5 w-6 rounded-sm bg-current transition-all duration-300 ease-out ${
                 isMenuOpen ? 'opacity-0' : 'opacity-100'
               }`}
             />
             <span 
-              className={`block h-0.5 w-6 rounded-sm bg-current transition-all duration-300 ease-in-out ${
+              className={`block h-0.5 w-6 rounded-sm bg-current transition-all duration-300 ease-out ${
                 isMenuOpen ? '-rotate-45 -translate-y-1' : 'translate-y-1'
               }`}
             />
@@ -110,7 +113,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Enhanced Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay */}
       <div 
         className={`fixed inset-0 bg-white w-screen h-screen transition-all duration-500 flex flex-col ${
           isMenuOpen 
