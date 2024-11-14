@@ -84,22 +84,30 @@ export default function Header() {
           <div className="md:hidden">
             <button 
               onClick={toggleMenu} 
-              className={`p-2 rounded-full transition-all duration-300 ${
+              className={`p-3 rounded-full transition-all duration-300 ${
                 scrolled 
                   ? 'text-[#8B4513] hover:bg-[#FDF8F5]' 
                   : 'text-black hover:bg-black hover:bg-opacity-10'
               } ${isMenuOpen ? 'rotate-90' : ''}`}
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
       </div>
+      {/* Mobile Menu Overlay */}
       <div 
-        className={`fixed inset-0 z-40 bg-white transition-all duration-500 ${
-          isMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
+        className={`fixed inset-0 bg-white w-screen h-screen transition-all duration-500 ${
+          isMenuOpen 
+            ? 'opacity-100 visible' 
+            : 'opacity-0 invisible pointer-events-none'
         }`}
+        style={{ 
+          minHeight: '100vh',
+          minWidth: '100vw',
+          zIndex: 40 
+        }}
       >
         <div className="flex flex-col h-full">
           <div className="flex justify-between items-center p-4">
@@ -114,10 +122,10 @@ export default function Header() {
             </Link>
             <button 
               onClick={toggleMenu} 
-              className="p-2 rounded-full text-[#8B4513] hover:bg-[#FDF8F5] transition-all duration-300 rotate-90"
+              className="p-3 rounded-full text-[#8B4513] hover:bg-[#F0E6D9] transition-all duration-300"
               aria-label="Close menu"
             >
-              <X size={24} />
+              <X size={28} />
             </button>
           </div>
           <nav className="flex-grow flex flex-col justify-center items-center space-y-12 p-4">
