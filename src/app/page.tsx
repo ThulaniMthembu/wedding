@@ -8,7 +8,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 
 const images = ['/couple-image.jpg', '/couple-image2.jpg', '/couple-image3.jpg'];
 
-const ourStory = "Azwi had admired Sbo from a distance for some time, captivated by her charisma and warmth. He often found himself drawn into Sbo's world, noticing little details like her laughter, her kindness toward others, and the way she seemed to light up every room she entered. One day, fate seemed to take pity on Azwi's quiet admiration, bringing the two together in a chance encounter. Conversation flowed effortlessly, and in that moment, both felt the unmistakable pull of connection. What began as a quiet admiration blossomed into a love story, marking the start of their beautiful journey together.";
+const ourStory = "We met in a dusty township of Witbank called ezinambeni. Sbo had her  own photography store and Azwi was working in a bank. The year was towards the off-peak of covid but a mask and saniter was Mandatory.  Fast forward I started to notice this guy with a blue mask always greeting me with enthusiasm.  Sbo had a chin chiskop and just living her best life. Until we eventually spoke and he invited me to his colleagues farewell party that was before he asked me how many kids I have. I guess kids were a deal breaker.  Well he proposed in 3months of us dating. We both couldn't wait to move out of ezinambeni witbank.";
 
 export default function HomePage() {
   const [timeLeft, setTimeLeft] = useState({
