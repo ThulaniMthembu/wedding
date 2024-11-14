@@ -21,10 +21,10 @@ export default function LocationPage() {
           src="/travel.jpg"
           alt="Travel destination"
           fill
-          className="object-cover filter blur-sm"
+          className="object-cover brightness-75"
           priority
         />
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
         <div className="absolute inset-0 flex items-center justify-center">
           <motion.h1 
             className="text-5xl md:text-6xl lg:text-7xl text-white font-light text-center"
