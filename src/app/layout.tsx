@@ -7,8 +7,8 @@ import Footer from '@/components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Azwi & Sbo Wedding',
-  description: 'Celebrate the wedding of Azwi and Sbo',
+  title: 'Azwi & Sbo | Wedding',
+  description: 'Celebrate the wedding of Azwimpheleli & Sebongile',
   manifest: '/site.webmanifest',
 }
 
@@ -19,9 +19,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="manifest" href="/site.webmanifest" />
-      </head>
       <body className={inter.className}>
         <Header />
         <main>{children}</main>
