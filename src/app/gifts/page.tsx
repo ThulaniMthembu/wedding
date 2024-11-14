@@ -20,10 +20,10 @@ export default function GiftsPage() {
           src="/gifts.jpg"
           alt="Gift registry"
           fill
-          className="object-cover brightness-75"
+          className="object-cover brightness-75 filter blur-sm"
           priority
         />
-        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
           <motion.h1 
             className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white font-light text-center mb-8"

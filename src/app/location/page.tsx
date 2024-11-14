@@ -21,7 +21,7 @@ export default function LocationPage() {
           src="/travel.jpg"
           alt="Travel destination"
           fill
-          className="object-cover"
+          className="object-cover filter blur-sm"
           priority
         />
         <div className="absolute inset-0 bg-black/40" />

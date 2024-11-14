@@ -138,13 +138,13 @@ export default function RsvpPage() {
             src="/15.png"
             alt="RSVP hero image"
             fill
-            className="object-cover brightness-75"
+            className="object-cover brightness-75 filter blur-sm"
             priority
           />
           <div className="absolute inset-0 bg-black/20" />
           <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
             <motion.h1 
-              className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white font-light text-center mb-8 "
+              className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white font-light text-center mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
@@ -174,7 +174,7 @@ export default function RsvpPage() {
             <div className="bg-[#8B4513] text-white p-6 rounded-lg shadow-lg mb-8">
               <p className="text-xl font-semibold mb-2">Important RSVP Deadline</p>
               <p className="text-lg">
-                It is <span className="font-bold underline">imperative</span> for every guest to send their RSVP names by no later than the <span className="font-bold">15th of January</span> to be added to the official guest list.
+                Kindly ensure that your RSVP, along with any additional guest details or special requirements, are submitted by the 15th January 2025 to ensure your inclusion on the official guest list.
               </p>
             </div>
             <motion.div
@@ -185,14 +185,17 @@ export default function RsvpPage() {
               className="text-center mb-12"
             >
               <div className="bg-white p-6 rounded-lg shadow-lg mb-8">
-                <p className="text-[#8B4513] mb-4">
-                  For your convenience, you can also RSVP to:
-                </p>
+                <h3 className="text-[#8B4513] mb-4">
+                  RSVP to:
+                </h3>
                 <div className="space-y-2 text-[#6B4423]">
                   <p>Themba Mahlaola: <a href="tel:+27833646557" className="hover:underline">083 364 6557</a></p>
                   <p>Ntokozo Mahlaola: <a href="tel:+27782762537" className="hover:underline">078 276 2537</a></p>
                   <p>Mpho Ntshavheni: <a href="tel:+27761497535" className="hover:underline">076 149 7535</a></p>
-                </div>
+                </div> <br />
+                <h3 className="text-[#8B4513] mb-4">
+                  For your convenience, feel free to just complete the form below.
+                </h3>
               </div>
             </motion.div>
 

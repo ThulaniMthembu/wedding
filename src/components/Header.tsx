@@ -83,7 +83,7 @@ export default function Header() {
         : 'bg-transparent backdrop-filter backdrop-blur-sm bg-opacity-80'
     }`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-6">
+        <div className="flex justify-between items-center pt-5 pb-15">
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex items-center space-x-4 text-black">
               <Image
