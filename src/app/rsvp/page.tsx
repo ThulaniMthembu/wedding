@@ -27,16 +27,12 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-// import { useToast } from "@/components/ui/use-toast"
-// import { Toaster } from "@/components/ui/toaster"
-
-emailjs.init(process.env.NEXT_PUBLIC_PUBLIC_KEY || '');
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().min(10, "Please enter a valid phone number"),
-  attending: z.enum(['yes', 'no']).optional(),
+  attending: z.enum(['yes', 'no']).nullable(),
   guests: z.string().optional(),
   foodRestrictions: z.string().optional(),
   comments: z.string().optional(),
@@ -50,7 +46,20 @@ export default function RsvpPage() {
   const scale = useTransform(scrollYProgress, [0, 0.3], [1, 0.9])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [modalState, setModalState] = useState<{ state: 'closed' | 'open', name: string }>({ state: 'closed', name: '' })
-  // const { toast } = useToast()
+
+  useEffect(() => {
+    const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
+    if (!publicKey) {
+      console.error('EmailJS public key is not set. Please check your environment variables.');
+    } else {
+      try {
+        emailjs.init(publicKey);
+        console.log('EmailJS initialized successfully');
+      } catch (error) {
+        console.error('Failed to initialize EmailJS:', error);
+      }
+    }
+  }, []);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -58,7 +67,7 @@ export default function RsvpPage() {
       name: "",
       email: "",
       phone: "",
-      attending: undefined,
+      attending: null,
       guests: "",
       foodRestrictions: "",
       comments: "",
@@ -81,18 +90,20 @@ export default function RsvpPage() {
         },
       }
 
-      await emailjs.send(
-        process.env.NEXT_PUBLIC_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_TEMPLATE_ID!,
-        templateParams
-      )
+      const serviceId = process.env.NEXT_PUBLIC_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+
+      if (!serviceId || !templateId) {
+        throw new Error('EmailJS service ID or template ID is not set.');
+      }
+
+      await emailjs.send(serviceId, templateId, templateParams)
       setModalState({ state: 'open', name: submittedName })
       form.reset()
-      // Reset the Select component for 'attending'
-      form.setValue('attending', undefined)
+      form.setValue('attending', null)
     } catch (error) {
       console.error('FAILED...', error)
-      setModalState({ state: 'open', name: submittedName }) // We'll use the same modal for error messages
+      setModalState({ state: 'open', name: submittedName })
     } finally {
       setIsSubmitting(false)
     }
@@ -111,21 +122,9 @@ export default function RsvpPage() {
   useEffect(() => {
     if (modalState.state === 'closed') {
       form.reset()
-      form.setValue('attending', undefined)
+      form.setValue('attending', null)
     }
   }, [modalState, form])
-
-  useEffect(() => {
-    // Prevent scrolling when success overlay is shown
-    // if (isSuccess) {
-    //   document.body.style.overflow = 'hidden'
-    // } else {
-    //   document.body.style.overflow = 'unset'
-    // }
-    // return () => {
-    //   document.body.style.overflow = 'unset'
-    // }
-  }, [modalState])
 
   return (
     <>
@@ -217,43 +216,6 @@ export default function RsvpPage() {
                 </p>
               </div>
 
-              {/* <AnimatePresence>
-                {isSuccess && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.5 }}
-                    className="absolute inset-0 bg-[#8B4513] bg-opacity-90 flex items-center justify-center z-10"
-                  >
-                    <div className="text-white text-center">
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                      >
-                        <CheckCircle className="w-16 h-16 mx-auto mb-4" />
-                      </motion.div>
-                      <motion.h2 
-                        className="text-2xl font-semibold mb-2"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                      >
-                        RSVP Sent Successfully!
-                      </motion.h2>
-                      <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
-                      >
-                        Thank you for your response.
-                      </motion.p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence> */}
-
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                   <FormField
@@ -316,7 +278,7 @@ export default function RsvpPage() {
                           <Users className="w-4 h-4 mr-2" />
                           Will you be attending? *
                         </FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select onValueChange={field.onChange} value={field.value ?? undefined}>
                           <FormControl>
                             <SelectTrigger className="bg-[#FDF8F5] border-[#D4B996] focus:border-[#8B4513] focus:ring-[#8B4513]">
                               <SelectValue placeholder="Select an option" />
@@ -396,8 +358,7 @@ export default function RsvpPage() {
                   />
 
                   <Button 
-                    type="submit" 
-                    className="w-full bg-[#8B4513] hover:bg-[#6B4423] text-white transition-colors duration-300"
+                    type="submit" className="w-full bg-[#8B4513] hover:bg-[#6B4423] text-white transition-colors duration-300"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
@@ -421,7 +382,6 @@ export default function RsvpPage() {
           </div>
         </motion.section>
       </div>
-      {/* <Toaster /> */}
       <style jsx global>{`
         @keyframes background-in {
           0% {
