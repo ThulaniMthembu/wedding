@@ -7,7 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { useState, useEffect } from 'react'
-import { addRSVP } from '@/lib/firestore'
+import { addDoc, collection } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
 import '@/styles/toast.css'
 
 import { Button } from "@/components/ui/button"
@@ -47,7 +48,6 @@ export default function RsvpPage() {
   const scale = useTransform(scrollYProgress, [0, 0.3], [1, 0.9])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [toastState, setToastState] = useState({ visible: false, title: '', message: '' });
-  //const { toast } = useToast()
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -66,7 +66,20 @@ export default function RsvpPage() {
     const submittedName = values.name;
     setIsSubmitting(true)
     try {
-      await addRSVP(values)
+      // Basic rate limiting
+      const lastSubmission = localStorage.getItem('lastRSVPSubmission')
+      const now = Date.now()
+      if (lastSubmission && now - parseInt(lastSubmission) < 60000) {
+        throw new Error("Please wait a minute before submitting again.")
+      }
+
+      await addDoc(collection(db, 'rsvps'), {
+        ...values,
+        timestamp: new Date(),
+      })
+
+      localStorage.setItem('lastRSVPSubmission', now.toString())
+
       setToastState({
         visible: true,
         title: "RSVP Sent Successfully!",
@@ -78,7 +91,7 @@ export default function RsvpPage() {
       setToastState({
         visible: true,
         title: "Submission Failed",
-        message: "There was an error submitting your RSVP. Please try again or contact us directly."
+        message: error instanceof Error ? error.message : "There was an error submitting your RSVP. Please try again or contact us directly."
       });
     } finally {
       setIsSubmitting(false)
