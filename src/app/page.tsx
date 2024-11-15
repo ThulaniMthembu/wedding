@@ -8,7 +8,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 
 const images = ['/couple-image.jpg', '/couple-image2.jpg', '/couple-image3.jpg'];
 
-const ourStory = "We met in a dusty township of Witbank called ezinambeni. Sbo had her  own photography store and Azwi was working in a bank. The year was towards the off-peak of covid but a mask and saniter was Mandatory.  Fast forward I started to notice this guy with a blue mask always greeting me with enthusiasm.  Sbo had a chin chiskop and just living her best life. Until we eventually spoke and he invited me to his colleagues farewell party that was before he asked me how many kids I have. I guess kids were a deal breaker.  Well he proposed in 3months of us dating. We both couldn't wait to move out of ezinambeni witbank.";
+const ourStory = "We met in a dusty township of Witbank called Ezinambeni. I had my own photography store and Azwi was working in a bank. The year was towards the off-peak of covid but a mask and saniter were still mandatory. Fast forward, I started to notice this guy with a blue mask always greeting me with enthusiasm, I had a chiskop and was just out there living my best life. Until we eventually spoke and he invited me to his colleague's farewell party, that was before he asked me how many kids I have lol... I guess kids were a deal breaker. Well, he proposed in 3 months of us dating and we both couldn't wait to move out of ezinambeni witbank.";
 
 export default function HomePage() {
   const [timeLeft, setTimeLeft] = useState({
@@ -174,11 +174,11 @@ export default function HomePage() {
               </div>
             </div>
             <div className='order-1 lg:order-2'>
-              <h2 className='text-2xl sm:text-3xl md:text-4xl text-center lg:text-left mb-6 sm:mb-8 text-[#8B4513]'>
+              <h2 className='text-2xl sm:text-3xl md:text-4xl text-start lg:text-left mb-6 sm:mb-8 text-[#8B4513]'>
                 From Admiration to Love
               </h2>
               <motion.p
-                className='text-base sm:text-lg md:text-xl text-[#6B4423] leading-relaxed text-center lg:text-left'
+                className='text-base sm:text-lg md:text-xl text-[#6B4423] leading-relaxed text-start lg:text-left'
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
