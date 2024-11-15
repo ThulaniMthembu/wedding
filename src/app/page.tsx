@@ -5,12 +5,14 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Calendar, MapPin } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { HomePageSkeleton } from '@/components/HomePageSkeleton';
 
 const images = ['/couple-image.jpg', '/couple-image2.jpg', '/couple-image3.jpg'];
 
 const ourStory = "We met in a dusty township of Witbank called Ezinambeni. I had my own photography store and Azwi was working in a bank. The year was towards the off-peak of covid but a mask and saniter were still mandatory. Fast forward, I started to notice this guy with a blue mask always greeting me with enthusiasm, I had a chiskop and was just out there living my best life. Until we eventually spoke and he invited me to his colleague's farewell party, that was before he asked me how many kids I have lol... I guess kids were a deal breaker. Well, he proposed in 3 months of us dating and we both couldn't wait to move out of ezinambeni witbank.";
 
 export default function HomePage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -38,8 +40,20 @@ export default function HomePage() {
       setTimeLeft({ days, hours, minutes, seconds });
     }, 1000);
 
-    return () => clearInterval(timer);
+    // Simulate content loading
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // Adjust this value to simulate different loading times
+
+    return () => {
+      clearInterval(timer);
+      clearTimeout(loadingTimer);
+    };
   }, []);
+
+  if (isLoading) {
+    return <HomePageSkeleton />;
+  }
 
   return (
     <div className='min-h-screen bg-[#FDF8F5] text-[#8B4513]'>

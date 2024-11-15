@@ -1,15 +1,16 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Phone, Mail, User, Users, Utensils, MessageSquare } from 'lucide-react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { useState, useEffect } from 'react'
 import { addDoc, collection } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import '@/styles/toast.css'
+import { RSVPSkeleton } from '@/components/RSVPSkeleton'
 
 import { Button } from "@/components/ui/button"
 import {
@@ -43,6 +44,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export default function RsvpPage() {
+  const [isLoading, setIsLoading] = useState(true)
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.3], [1, 0.9])
@@ -61,6 +63,15 @@ export default function RsvpPage() {
       comments: "",
     },
   })
+
+  useEffect(() => {
+    // Simulate content loading
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 2000) // Adjust this value to simulate different loading times
+
+    return () => clearTimeout(timer)
+  }, [])
 
   async function onSubmit(values: FormValues) {
     const submittedName = values.name;
@@ -106,6 +117,10 @@ export default function RsvpPage() {
       return () => clearTimeout(timer);
     }
   }, [toastState.visible]);
+
+  if (isLoading) {
+    return <RSVPSkeleton />
+  }
 
   return (
     <div className="min-h-screen bg-[#FDF8F5] text-[#8B4513]">
@@ -340,7 +355,8 @@ export default function RsvpPage() {
                     >
                       <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
                       </svg>
                       Sending...
                     </motion.div>

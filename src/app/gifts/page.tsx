@@ -1,13 +1,29 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Gift, ShoppingBag } from 'lucide-react'
+import { GiftsSkeleton } from '@/components/GiftsSkeleton'
 
 export default function GiftsPage() {
+  const [isLoading, setIsLoading] = useState(true)
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.3], [1, 0.9])
+
+  useEffect(() => {
+    // Simulate content loading
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 2000) // Adjust this value to simulate different loading times
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (isLoading) {
+    return <GiftsSkeleton />
+  }
 
   return (
     <div className="min-h-screen bg-[#FDF8F5] text-[#8B4513]">

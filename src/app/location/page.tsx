@@ -1,14 +1,30 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { MapPin, Wifi, Car, Coffee, Tv } from 'lucide-react'
-import Link from 'next/link';
+import Link from 'next/link'
+import { LocationSkeleton } from '@/components/LocationSkeleton'
 
 export default function LocationPage() {
+  const [isLoading, setIsLoading] = useState(true)
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.3], [1, 0.9])
+
+  useEffect(() => {
+    // Simulate content loading
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 2000) // Adjust this value to simulate different loading times
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (isLoading) {
+    return <LocationSkeleton />
+  }
 
   return (
     <div className="min-h-screen bg-[#FDF8F5] text-[#8B4513]">
@@ -21,11 +37,11 @@ export default function LocationPage() {
           src="/travel.jpg"
           alt="Travel destination"
           fill
-          className="object-cover brightness-75"
+          className="object-cover filter blur-sm"
           priority
         />
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
           <motion.h1 
             className="text-5xl md:text-6xl lg:text-7xl text-white font-light text-center"
             initial={{ opacity: 0, y: 20 }}
@@ -34,6 +50,14 @@ export default function LocationPage() {
           >
             Our Wedding Location
           </motion.h1>
+          <motion.p
+            className="text-xl md:text-2xl lg:text-3xl text-white font-light text-center max-w-3xl mx-auto mt-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Join us for our special day at the beautiful Riverside Country Estate
+          </motion.p>
         </div>
       </motion.section>
 
