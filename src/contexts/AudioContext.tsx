@@ -5,18 +5,35 @@ import React, { createContext, useState, useContext, useRef, useEffect } from 'r
 type AudioContextType = {
   isPlaying: boolean;
   toggleAudio: () => void;
+  autoplayAllowed: boolean;
 };
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
 
 export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isPlaying, setIsPlaying] = useState(true); // Update 1: Initial state is true
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [autoplayAllowed, setAutoplayAllowed] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    audioRef.current = new Audio('/song/msaki.mp3');
-    audioRef.current.loop = true;
-    audioRef.current.play(); // Update 2: Start playing immediately
+    const audio = new Audio('/song/msaki.mp3');
+    audio.loop = true;
+    audioRef.current = audio;
+
+    const attemptAutoplay = async () => {
+      try {
+        await audio.play();
+        setIsPlaying(true);
+        setAutoplayAllowed(true);
+      } catch (error) {
+        console.error("Autoplay prevented:", error);
+        setIsPlaying(false);
+        setAutoplayAllowed(false);
+      }
+    };
+
+    attemptAutoplay();
+
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -29,15 +46,23 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
+        setIsPlaying(false);
       } else {
-        audioRef.current.play();
+        audioRef.current.play()
+          .then(() => {
+            setIsPlaying(true);
+            setAutoplayAllowed(true);
+          })
+          .catch((error) => {
+            console.error("Playback failed:", error);
+            setIsPlaying(false);
+          });
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
   return (
-    <AudioContext.Provider value={{ isPlaying, toggleAudio }}>
+    <AudioContext.Provider value={{ isPlaying, toggleAudio, autoplayAllowed }}>
       {children}
     </AudioContext.Provider>
   );
