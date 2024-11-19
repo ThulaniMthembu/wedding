@@ -14,7 +14,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    audioRef.current = new Audio('/song/your-song.mp3');
+    audioRef.current = new Audio('/song/msaki.mp3');
     audioRef.current.loop = true;
     audioRef.current.play(); // Update 2: Start playing immediately
     return () => {
